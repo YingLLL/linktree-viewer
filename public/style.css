@@ -1,0 +1,131 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Slab:wght@500&family=Ubuntu+Mono&display=swap');
+
+body {
+    padding: 3%;
+}
+
+.container {
+    min-width: 700px;
+    max-width: 90%;
+    width: 700px;
+    min-height: 500px;
+    text-align: center;
+    font-family: 'Ubuntu Mono', monospace;
+    border-style: solid;
+    border-color: #f0f0f0;
+    border-radius: 12px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 1%;
+    display: flex;
+    flex-direction: column;
+}
+
+#config-container, #tree-container {
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px;
+    position: relative;
+    flex-grow: 1;
+    max-height: 100%;
+    min-height: 100px;
+}
+
+.tree-content {
+    margin-top: 9px;
+    text-align: left;
+    overflow: auto;
+    min-height: 60px;
+}
+
+#tree {
+    height: 100%;
+}
+
+.config-title, .tree-title {
+    position: absolute;
+    top: -14px;
+    left: 10px;
+    background-color: #fff;
+    padding: 0 5px;
+    font-weight: bold;
+}
+
+.config-submit {
+    position: absolute;
+    bottom: -14px;
+    background-color: #fff;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.tree-get-subtree {
+    position: absolute;
+    top: -14px;
+    right: 10px;
+    background-color: #fff;
+    padding: 0 5px;
+    font-weight: bold;
+}
+
+label, #radioButtons {
+    margin-left: 10px;
+}
+
+input#urlInput:focus:invalid, input#proxyAddress:focus:invalid {
+    border: 2px solid rgba(217, 74, 74, 0.835);
+}
+
+.subform {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+input#timeout {
+    width: 60px;
+}
+
+.tagify__input {
+    text-align: left;
+}
+
+.fancytree-title {
+    font-family: 'Ubuntu Mono', monospace;
+    padding-right: 15px !important;
+}
+
+.loader {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translateX(-50%, -50%);
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #272e32;
+    border-radius: 50%;
+    width: 25px;
+    height: 25px;
+    animation: spin 2s linear infinite;
+}
+
+@keyframes spin {
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+#tree li span.fancytree-node:not(.fancytree-has-children) {
+    padding-left: 10px;
+}
+
+span.fancytree-icon, span.fancytree-checkbox, span.fancytree-expander, span.fancytree-custom-icon {
+    position: relative;
+    top: 0.3em;
+}
+
+.fancytree-container {
+    border: none !important;
+}

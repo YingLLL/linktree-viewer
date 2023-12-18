@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Index Linktree Viewer</title>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/style.css" />
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
+        integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Import assets for jquery-ui plugin-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/jquery-ui.min.js"
+        integrity="sha512-57oZ/vW8ANMjR/KQ6Be9v/+/h6bq9/l3f0Oc7vn6qMqyhvPd1cvKBRWWpzu0QoneImqr2SkmO4MSqU+RpHom3Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.13.2/themes/base/jquery-ui.min.css"
+        integrity="sha512-ELV+xyi8IhEApPS/pSj66+Jiw+sOT1Mqkzlh8ExXihe4zfqbWkxPRi8wptXIO9g73FSlhmquFlUOuMSoXz5IRw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Import assets for fancytree plugin-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.fancytree/2.38.3/jquery.fancytree-all-deps.min.js"
+        integrity="sha512-qCGTrUtUNlAuOAJyFgipKZFSa175os1bqfpuvbX5Z7iKsp5onINDk6lt39Qszz7HiZeZy/9D2zALInUVTbTb1Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery.fancytree@2.38.3/dist/modules/jquery.fancytree.glyph.js"
+        integrity="sha256-M6rTBx8elk4M5aaJ2/7CLu5mTgtpktoY7COPbHBxnEg=" crossorigin="anonymous"></script>
+    <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/jquery.fancytree/2.38.3/skin-awesome/ui.fancytree.css"
+        integrity="sha512-WrQov9LIsdE1ymdCpafZ7lpNhrxVgtcj1Uv1Zwuf4/c0puCoYW1MZoo3jxFTmMsXZA7IQFf4Xh8nOmzgSQFV0Q=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Import assets for tagify plugin-->
+    <script src="https://cdn.jsdelivr.net/npm/@yaireo/tagify@4.17.9/dist/tagify.min.js"
+        integrity="sha256-2XCklzgV9y3qHhHggh6mmgUhCB41i3XLES80Mxnj2js=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@yaireo/tagify@4.17.9/dist/tagify.min.css">
+</head>
+
+<body>
+    <div class="container mt-5" id="baseContainer">
+        <h2 id="page-title">Index Linktree Viewer</h2>
+        <form id="ExtractionForm" onsubmit="validateForm(event)">
+            <br>
+            <div class="subform">
+                <input type="url" placeholder="Enter valid url to analyse" id="urlInput" name="url" required
+                    pattern="https?://.+" style="width: 100%" />
+            </div>
+            <br>
+            <div id="config-container">
+                <div class="config-title">Extraction configs</div>
+                <div class="config-body">
+                    <label for="extractionType">Extraction Type:</label>
+                    <select id="extractionType" name="extractionType">
+                        <option value="request">Request</option>
+                        <option value="axios">Axios</option>
+                        <option value="puppeteer">Puppeteer</option>
+                    </select>
+                    <div id="puppeteerExtraContainer" style="display: none;">
+                        <div class="subform">
+                            <label for="enablePuppeteerExtra">Enable Puppeteer Extra:</label>
+                            <div id="radioButtons">
+                                <label>
+                                    <input type="radio" name="enablePuppeteerExtra" value="false" checked> No
+                                </label>
+                                <label>
+                                    <input type="radio" name="enablePuppeteerExtra" value="true"> Yes
+                                </label>
+                            </div>
+                        </div>
+                        <label for="timeout">Puppeteer Timeout:</label>
+                        <input type="number" id="timeout" name="timeout" min="0" value="60" />
+                    </div>
+                    <div class="subform">
+                        <label for="enableUseragent">Enable Useragent:</label>
+                        <div id="radioButtons">
+                            <label>
+                                <input type="radio" name="enableUseragent" value="false" checked> No
+                            </label>
+                            <label>
+                                <input type="radio" name="enableUseragent" value="true"> Yes
+                            </label>
+                        </div>
+                    </div>
+                    <div id="useragentContainer" style="display: none;">
+                        <label for="useragent">Custom User Agent:</label>
+                        <input type="text" id="useragent" name="useragent">
+                    </div>
+                    <div id="proxyContainer" style="display: none;">
+                        <div class="subform">
+                            <label for="enableProxy">Enable proxy:</label>
+                            <div id="radioButtons">
+                                <label>
+                                    <input type="radio" name="enableProxy" value="false" checked> No
+                                </label>
+                                <label>
+                                    <input type="radio" name="enableProxy" value="true"> Yes
+                                </label>
+                            </div>
+                        </div>
+                        <div id="proxyAddressContainer" style="display: none;">
+                            <div class="subform">
+                                <label for="enableProxyAuth">Enable Proxy Authentication:</label>
+                                <div id="radioButtons">
+                                    <label>
+                                        <input type="radio" name="enableProxyAuth" value="false" checked> No
+                                    </label>
+                                    <label>
+                                        <input type="radio" name="enableProxyAuth" value="true"> Yes
+                                    </label>
+                                </div>
+                            </div>
+                            <label for="proxyAddress">Proxy Address:</label>
+                            <input type="text" id="proxyAddress" name="proxyAddress" pattern="https?://.+">
+                        </div>
+                    </div>
+                    <div class="subform">
+                        <label for="includeDomains">Include Domains:</label>
+                        <input name="includeDomains" class="tagify">
+                    </div>
+                </div>
+                <br>
+                <div class="config-submit">
+                    <input type="submit" value="Build Linktree" id="submitButton" disabled="true">
+                </div>
+            </div>
+            <br>
+        </form>
+        <div id="tree-container">
+            <div class="tree-title">Linktree</div>
+            <div class="tree-get-subtree">
+                <button id="getChildrenBtn" class="btn btn-info btn-sm" disabled="true">Get Children</button>
+            </div>
+            <div class="loader" id="loader" style="display: none;"></div>
+            <div class="tree-content" hidden>
+                <div id="tree"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // methods to help with resizing of containers
+        const $baseContainer = $("#baseContainer");
+        $baseContainer.resizable({
+            resize: function (event, ui) {
+                // autoscroll
+                if ((ui.position.top + $(this).height() > $(window).height() - 160) && ($(".tree-content").height() + 100 < $(".fancytree-container").outerHeight())) {
+                    $(this).height($(this).height() + 5);
+                    setTimeout(function () {
+                        $(window).scrollTop($(this).prop("scrollHeight"));
+                    }.bind(this), 100);
+                    // $(window).scrollTop($(this).prop("scrollHeight"));
+                }
+                resizeTreeContainer();
+            }
+        });
+
+        const resizeContainer = document.getElementById('config-container');
+        const resizeObserver = new ResizeObserver(entries => {
+            for (const entry of entries) {
+                resizeTreeContainer();
+            }
+        });
+        resizeObserver.observe(resizeContainer);
+
+        function resizeTreeContainer() {
+            let treeContainerSpace = $("#baseContainer").height() - ($("#page-title").height() + 8) - $("#ExtractionForm").height();
+            $("#tree-container").outerHeight(treeContainerSpace);
+            $(".tree-content").outerHeight($("#tree-container").height() - 10);
+        }
+
+        function resizeBaseContainer() {
+            let sumContentHeight = ($("#page-title").height() + 8) + $("#ExtractionForm").height();
+            $baseContainer.resizable('option', 'minHeight', sumContentHeight + 140);
+            $baseContainer.height(sumContentHeight + $(".tree-content").outerHeight() + 40);
+        }
+
+        // Event listeners/handlers for enabling the submit button when input is valid
+        const submitButton = document.getElementById('submitButton');
+        let urlInput = document.getElementById('urlInput');
+        let proxyAddressInput = document.getElementById('proxyAddress');
+
+        function urlInputEventHandler() {
+            submitButton.disabled = !urlInput.checkValidity();
+        }
+
+        function combinedInputEventHandler() {
+            submitButton.disabled = !proxyAddressInput.checkValidity() || !urlInput.checkValidity();
+        }
+        urlInput.addEventListener('input', urlInputEventHandler);
+
+        $("#extractionType").change(function () {
+            if ($(this).val() === "puppeteer") {
+                $("#puppeteerExtraContainer").show();
+                $('#proxyContainer').show();
+                resizeBaseContainer();
+            } else {
+                $("#puppeteerExtraContainer").hide();
+                $('#proxyContainer').hide();
+                $('input[name="enableProxy"][value="false"]').prop('checked', true).trigger('change');
+                resizeBaseContainer();
+            }
+        })
+
+        $("input[name='enableProxy']").change(function () {
+            if ($(this).val() === 'true') {
+                document.getElementById('proxyAddress').required = true;
+                $("#proxyAddressContainer").show();
+                $('#submitButton').prop('disabled', !proxyAddressInput.checkValidity() || !urlInput.checkValidity());
+                urlInput.removeEventListener('input', urlInputEventHandler);
+                urlInput.addEventListener('input', combinedInputEventHandler);
+                proxyAddressInput.addEventListener('input', combinedInputEventHandler);
+                resizeBaseContainer();
+            } else {
+                document.getElementById('proxyAddress').required = false;
+                $("#proxyAddressContainer").hide();
+                submitButton.disabled = !urlInput.checkValidity();
+                proxyAddressInput.removeEventListener('input', combinedInputEventHandler);
+                urlInput.removeEventListener('input', combinedInputEventHandler);
+                urlInput.addEventListener('input', urlInputEventHandler);
+                resizeBaseContainer();
+            }
+        });
+
+        $("input[name='enableUseragent']").change(function () {
+            $(this).val() === 'true' ? $("#useragentContainer").show() : $("#useragentContainer").hide();
+            resizeBaseContainer();
+        });
+
+        // helper methods for building linktree
+        const taggedInput = document.querySelector('input.tagify');
+        const tagify = new Tagify(taggedInput)
+
+        function toggleGetChildrenBtn() {
+            let tree = $.ui.fancytree.getTree("#tree");
+            let atLeastOneNodeSelected = tree.getSelectedNodes().length > 0;
+            $("#getChildrenBtn").prop("disabled", !atLeastOneNodeSelected);
+        }
+
+        function checkDuplicates(childrenNodes) {
+            let tree = $.ui.fancytree.getTree("#tree");
+            let allTitles = new Set();
+            tree.visit(node => allTitles.add(node.title));
+            let nodesToAdd = childrenNodes.filter(node => !allTitles.has(node.title));
+            return nodesToAdd;
+        }
+
+        async function getLinktree(params) {
+            try {
+                const response = await fetch('/getLinktree', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'x-access-token': 'ZYDObSNLYWsISl1jNr3J2vT7t7xZBH'
+                    },
+                    body: JSON.stringify(params)
+                });
+                const data = await response.json();
+                return data;
+            }
+            catch (e) {
+                console.log('Error fetching linktree:', e);
+                return { error: true, linktree: { title: params.url, children: [{ title: "[x] failed to get linktree", children: [] }], folder: true } };
+            }
+        }
+
+        function buildParams(targetUrl) {
+            let params = {
+                url: targetUrl,
+                include_domains: tagify.value.map(tag => { return { text: tag.value } }),
+                extraction_type: document.getElementById('extractionType').value,
+                use_puppeteer_extra: JSON.parse($('input[name="enablePuppeteerExtra"]:checked').val()),
+                proxy: JSON.parse($('input[name="enableProxy"]:checked').val()),
+                proxy_ip: document.getElementById('proxyAddress').value,
+                proxy_auth: JSON.parse($('input[name="enableProxyAuth"]:checked').val()),
+                useragent: JSON.parse($('input[name="enableUseragent"]:checked').val()),
+                useragent_str: document.getElementById('useragent').value,
+                timeout: parseInt(document.getElementById('timeout').value),
+                depth: 1,
+            }
+            return params;
+        }
+
+        async function validateForm(event) {
+            event.preventDefault();
+            const urlInput = document.getElementById('urlInput');
+            if (!urlInput.checkValidity()) {
+                console.log('Invalid URL. Please enter a valid URL.');
+            } else {
+                // destroy current linktree
+                let tree = $.ui.fancytree.getTree("#tree");
+                if (tree) tree.destroy();
+
+                const loader = document.getElementById('loader');
+                loader.style.display = 'block';
+                document.querySelector('.tree-content').hidden = true;
+
+                try {
+                    let params = buildParams(urlInput.value);
+                    let data = await getLinktree(params);
+                    loader.style.display = 'none';
+                    document.querySelector('.tree-content').hidden = false;
+                    $("#tree").fancytree({
+                        // Fancytree configuration options
+                        extensions: ["glyph"],
+                        checkbox: true,
+                        clickFolderMode: 2,
+                        checkboxAutoHide: true,
+                        glyph: {
+                            preset: "awesome5",
+                            map: {
+                                doc: "fas fa-regular fa-link",
+                                folder: "fas fa-solid fa-list",
+                                folderOpen: "fas fa-solid fa-list"
+                                // doc: "glyphicon glyphicon-file",
+                                // docOpen: "glyphicon glyphicon-file",
+                                // checkbox: "glyphicon glyphicon-unchecked",
+                                // checkboxSelected: "glyphicon glyphicon-check",
+                                // checkboxUnknown: "glyphicon glyphicon-share",
+                                // dragHelper: "glyphicon glyphicon-play",
+                                // dropMarker: "glyphicon glyphicon-arrow-right",
+                                // error: "glyphicon glyphicon-warning-sign",
+                                // expanderClosed: "glyphicon glyphicon-menu-right",
+                                // expanderLazy: "glyphicon glyphicon-menu-right",  // glyphicon-plus-sign
+                                // expanderOpen: "glyphicon glyphicon-menu-down",  // glyphicon-collapse-down
+                                // folder: "glyphicon glyphicon-folder-close",
+                                // folderOpen: "glyphicon glyphicon-folder-open",
+                                // loading: "glyphicon glyphicon-refresh"
+                            }
+                        },
+                        // wide: {
+                        //     iconWidth: "1px",     // Adjust this value to change the space between connectors
+                        //     iconSpacing: "0.5px",  // Adjust this value to change the space between connectors
+                        //     levelOfs: "1.5px"      // Adjust this value to change the vertical space between connectors
+                        // },
+                        // dnd: {
+                        //     preventVoidMoves: true,
+                        //     preventRecursiveMoves: true,
+                        //     autoExpandMS: 400,
+                        //     dragStart: function (node, data) {
+                        //         return true;
+                        //     },
+                        //     dragEnter: function (node, data) {
+                        //         return true;
+                        //     },
+                        //     dragDrop: function (node, data) {
+                        //         data.otherNode.moveTo(node, data.hitMode);
+                        //     }
+                        // },
+                        source: [data.linktree],
+                        select: function (event, data) {
+                            toggleGetChildrenBtn();
+                        }
+                    });
+                    $(".fancytree-container").addClass("fancytree-connectors");
+                }
+                catch (e) {
+                    console.log('Get linktree error:', e)
+                }
+            }
+        }
+
+        // Event listener to build sub linktrees
+        $("#getChildrenBtn").on("click", function () {
+            let tree = $.ui.fancytree.getTree("#tree");
+            var selectedNodes = tree.getSelectedNodes();
+            // Loop through selected nodes and send requests
+            selectedNodes.forEach(async function (node) {
+                node.setSelected(false);
+                node.setStatus('loading')
+                let params = buildParams(node.title);
+                let data = await getLinktree(params);
+                if (data.error) {
+                    node.setStatus('error', data.message)
+                } else {
+                    let childsToAdd = checkDuplicates(data.linktree.children);
+                    if (childsToAdd.length > 0) {
+                        node.folder = true;
+                        node.setExpanded(false);
+                        node.addChildren(childsToAdd);
+                        node.render(true);
+                    }
+                    node.setStatus('ok');
+                }
+            });
+        });
+    </script>
+</body>
+
+</html>

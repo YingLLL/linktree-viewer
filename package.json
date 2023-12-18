@@ -1,0 +1,27 @@
+{
+	"name": "linktree-viewer",
+	"version": "1.0.0",
+	"engines": {
+		"node": ">=18.0.0"
+	},
+	"description": "Standalone application for generating index linktrees",
+	"main": "server.js",
+	"scripts": {
+		"test": "echo \"Error: no test specified\" && exit 1"
+	},
+	"author": "",
+	"license": "ISC",
+	"dependencies": {
+		"async": "^3.2.5",
+		"axios": "^1.6.2",
+		"body-parser": "^1.20.2",
+		"cheerio": "^1.0.0-rc.12",
+		"cors": "^2.8.5",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"puppeteer": "^21.5.2",
+		"puppeteer-extra": "^3.3.6",
+		"puppeteer-extra-plugin-stealth": "^2.11.2",
+		"request": "^2.88.2"
+	}
+}
