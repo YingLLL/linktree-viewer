@@ -7,7 +7,7 @@ $baseContainer.resizable({
             $(this).height($(this).height() + 5);
             setTimeout(function () {
                 $(window).scrollTop($(this).prop("scrollHeight"));
-            }.bind(this), 100);
+            }.bind(this), 800);
         }
         resizeTreeContainer();
     }
@@ -15,9 +15,8 @@ $baseContainer.resizable({
 
 const resizeContainer = document.getElementById('config-container');
 const resizeObserver = new ResizeObserver(entries => {
-    for (const entry of entries) {
-        resizeTreeContainer();
-    }
+    resizeTreeContainer();
+    resizeBaseContainer();
 });
 resizeObserver.observe(resizeContainer);
 

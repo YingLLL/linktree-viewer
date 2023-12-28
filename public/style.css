@@ -34,10 +34,6 @@ input[type=radio] {
     vertical-align: -2px;
 }
 
-#tree-container {
-    margin-top: 8px;
-}
-
 .tree-content {
     margin-top: 9px;
     text-align: left;
@@ -58,14 +54,6 @@ input[type=radio] {
     font-weight: bold;
 }
 
-.config-submit {
-    position: absolute;
-    bottom: -14px;
-    background-color: #fff;
-    left: 50%;
-    transform: translateX(-50%);
-}
-
 .tree-connector {
     position: absolute;
     top: -14px;
@@ -76,7 +64,7 @@ input[type=radio] {
     font-weight: bold;
 }
 
-.tree-get-subtree {
+.config-submit, .tree-get-subtree {
     position: absolute;
     top: -14px;
     right: 10px;
