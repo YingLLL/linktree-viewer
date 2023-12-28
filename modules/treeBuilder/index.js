@@ -42,9 +42,9 @@ const buildLinkTree = async (task, targetUrl, currentDepth) => {
                     let _href = $(link).attr('href');
                     if (_href && _href.trim().length > 0) {
                         let _url = Url.resolve(targetUrl, _href);
-                        if (!task.linkTreeUrls.includes(_url) && task.checkDomain(_url, task.include_domains)) {
+                        if (!task.linktree_urls.includes(_url) && task.checkDomain(_url, task.include_domains)) {
                             urls.push(_url);
-                            task.linkTreeUrls.push(_url)
+                            task.linktree_urls.push(_url)
                         }
                     }
                 })

@@ -125,6 +125,17 @@ async function getLinktree(params) {
     }
 }
 
+function getTreeList() {
+    let tree = $.ui.fancytree.getTree("#tree");
+    let nodeTitles = [];
+    if (tree) {
+        tree.visit((node) => {
+            nodeTitles.push(node.title);
+        });
+    }
+    return nodeTitles;
+}
+
 function buildParams(targetUrl) {
     let params = {
         url: targetUrl,
@@ -137,7 +148,8 @@ function buildParams(targetUrl) {
         useragent: JSON.parse($('input[name="enableUseragent"]:checked').val()),
         useragent_str: document.getElementById('useragent').value,
         timeout: parseInt(document.getElementById('timeout').value),
-        depth: 1,
+        depth: parseInt(document.getElementById('depth').value),
+        linktree_urls: getTreeList()
     }
     return params;
 }
@@ -182,6 +194,9 @@ async function validateForm(event) {
                 createNode: function (event, data) {
                     if (isStylesToggled) data.node.li.classList.add("connectors");
                 },
+                click: function (event, data) {
+                    if (data.node.title) copyToClipboard(data.node.title);
+                }
             });
         }
         catch (e) {
@@ -227,4 +242,15 @@ function toggleCss() {
             item.classList.remove('connectors');
         }
     }
+}
+
+// Function to copy text to clipboard
+function copyToClipboard(text) {
+    navigator.clipboard.writeText(text)
+        .then(function () {
+            console.log('Text copied to clipboard:', text);
+        })
+        .catch(function (err) {
+            console.error('Unable to copy text to clipboard', err);
+        });
 }

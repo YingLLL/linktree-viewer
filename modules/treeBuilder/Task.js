@@ -1,5 +1,4 @@
 class Task {
-    linkTreeUrls = [];
     constructor({
         taskID,
         url,
@@ -12,7 +11,8 @@ class Task {
         useragent,
         useragent_str,
         timeout,
-        depth
+        depth,
+        linktree_urls
     }) {
         this.taskID = taskID;
         this.url = url;
@@ -26,6 +26,7 @@ class Task {
         this.useragent_str = useragent_str;
         this.timeout = timeout;
         this.depth = depth;
+        this.linktree_urls = linktree_urls;
     }
 
     checkDomain(_url) {

@@ -73,7 +73,7 @@ input[type=radio] {
     font-weight: bold;
 }
 
-button[disabled]:hover {
+input[type=submit][disabled]:hover, button[disabled]:hover {
     cursor: not-allowed;
 }
 
@@ -95,6 +95,10 @@ input#timeout {
     width: 60px;
 }
 
+label[for=depth] {
+    margin-top: 5px;
+}
+
 tags.tagify {
     max-width: 100%;
     overflow-x: auto;
@@ -107,7 +111,6 @@ tags.tagify {
 
 .fancytree-title {
     font-family: 'Ubuntu Mono', monospace;
-    padding-right: 15px !important;
 }
 
 .loader {
