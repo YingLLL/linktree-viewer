@@ -244,13 +244,14 @@ function toggleCss() {
     }
 }
 
-// Function to copy text to clipboard
 function copyToClipboard(text) {
     navigator.clipboard.writeText(text)
         .then(function () {
-            console.log('Text copied to clipboard:', text);
+            $('.toast').toast('show')
         })
         .catch(function (err) {
             console.error('Unable to copy text to clipboard', err);
         });
 }
+
+$('.toast').toast({ animation: true, autohide: true });

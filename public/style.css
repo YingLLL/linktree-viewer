@@ -136,10 +136,6 @@ tags.tagify {
     }
 }
 
-#tree li span.fancytree-node:not(.fancytree-has-children) {
-    padding-left: 10px;
-}
-
 span.fancytree-icon, span.fancytree-checkbox, span.fancytree-expander, span.fancytree-custom-icon {
     position: relative;
     top: 0.3em;
@@ -151,6 +147,7 @@ span.fancytree-icon, span.fancytree-checkbox, span.fancytree-expander, span.fanc
 
 #tree li {
     position: relative;
+    width: fit-content;
 }
 
 #tree li.connectors::before {
@@ -178,11 +175,11 @@ span.fancytree-icon, span.fancytree-checkbox, span.fancytree-expander, span.fanc
     display: none;
 }
 
-#tree li[aria-expanded=true].connectors > ul > li:first-child::after {
+#tree li[aria-expanded=true].connectors>ul>li:first-child::after {
     height: 160%;
 }
 
-#tree li[aria-expanded=true].connectors > ul > li:first-child:last-child::after {
+#tree li[aria-expanded=true].connectors>ul>li:first-child:last-child::after {
     display: block;
     height: 60%;
     bottom: 100%;
